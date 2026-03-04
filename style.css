@@ -32,6 +32,11 @@ body.dark .container {
     background: #1e1e1e;
 }
 
+.container.dark {
+    background: #1e1e1e;
+    color: white;
+}
+
 .top-bar {
     display: flex;
     justify-content: space-between;
