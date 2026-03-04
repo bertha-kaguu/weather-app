@@ -15,6 +15,12 @@ searchBtn.addEventListener("click", () => {
     getWeather(city);
 });
 
+cityInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+        getWeather(cityInput.value);
+    }
+});
+
 function getWeather(city) {
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`;
 
