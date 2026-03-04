@@ -7,6 +7,7 @@ const forecastDiv = document.getElementById("forecast");
 const locationBtn = document.getElementById("locationBtn");
 const darkToggle = document.getElementById("darkToggle");
 const recentDiv = document.getElementById("recentSearches");
+const container = document.querySelector(".container");
 
 searchBtn.addEventListener("click", () => searchWeather());
 cityInput.addEventListener("keypress", e => {
@@ -36,8 +37,6 @@ darkToggle.addEventListener("click", () => {
         darkToggle.textContent = "🌙"; // Moon icon for light mode
     }
 });
-
-const container = document.querySelector(".container");
 
 if (localStorage.getItem("darkMode") === "true") {
     container.classList.add("dark");
@@ -135,18 +134,16 @@ function showRecent() {
 showRecent();
 
 function changeBackground(weatherType) {
-    const container = document.querySelector(".container");
-
     if (weatherType === "Clear") {
-        container.style.background = "linear-gradient(to right, #56ccf2, #2f80ed)";
+        document.body.style.background = "linear-gradient(to right, #56ccf2, #2f80ed)";
     } 
     else if (weatherType === "Rain") {
-        container.style.background = "linear-gradient(to right, #4b79a1, #283e51)";
+        document.body.style.background = "linear-gradient(to right, #4b79a1, #283e51)";
     } 
     else if (weatherType === "Clouds") {
-        container.style.background = "linear-gradient(to right, #bdc3c7, #2c3e50)";
+        document.body.style.background = "linear-gradient(to right, #bdc3c7, #2c3e50)";
     } 
     else {
-        container.style.background = "linear-gradient(to right, #4facfe, #00f2fe)";
+        document.body.style.background = "linear-gradient(to right, #4facfe, #00f2fe)";
     }
 }
