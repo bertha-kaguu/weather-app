@@ -14,11 +14,6 @@ body {
     transition: background 0.5s ease;
 }
 
-body.dark {
-    background: #121212;
-    color: white;
-}
-
 .container {
     background: rgba(255, 255, 255, 0.95);
     padding: 30px;
@@ -26,10 +21,6 @@ body.dark {
     text-align: center;
     width: 350px;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-body.dark .container {
-    background: #1e1e1e;
 }
 
 .container.dark {
