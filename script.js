@@ -21,12 +21,29 @@ locationBtn.addEventListener("click", () => {
 });
 
 darkToggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-    localStorage.setItem("darkMode", document.body.classList.contains("dark"));
+    const container = document.querySelector(".container");
+
+    // Toggle dark class on container instead of body
+    container.classList.toggle("dark");
+
+    // Save preference
+    localStorage.setItem("darkMode", container.classList.contains("dark"));
+
+    // Change the icon dynamically
+    if (container.classList.contains("dark")) {
+        darkToggle.textContent = "☀️"; // Sun icon for dark mode
+    } else {
+        darkToggle.textContent = "🌙"; // Moon icon for light mode
+    }
 });
 
+const container = document.querySelector(".container");
+
 if (localStorage.getItem("darkMode") === "true") {
-    document.body.classList.add("dark");
+    container.classList.add("dark");
+    darkToggle.textContent = "☀️";
+} else {
+    darkToggle.textContent = "🌙";
 }
 
 function searchWeather() {
@@ -118,17 +135,18 @@ function showRecent() {
 showRecent();
 
 function changeBackground(weatherType) {
-    if (document.body.classList.contains("dark")) return;
+    const container = document.querySelector(".container");
+
     if (weatherType === "Clear") {
-        document.body.style.background = "linear-gradient(to right, #56ccf2, #2f80ed)";
+        container.style.background = "linear-gradient(to right, #56ccf2, #2f80ed)";
     } 
     else if (weatherType === "Rain") {
-        document.body.style.background = "linear-gradient(to right, #4b79a1, #283e51)";
+        container.style.background = "linear-gradient(to right, #4b79a1, #283e51)";
     } 
     else if (weatherType === "Clouds") {
-        document.body.style.background = "linear-gradient(to right, #bdc3c7, #2c3e50)";
+        container.style.background = "linear-gradient(to right, #bdc3c7, #2c3e50)";
     } 
     else {
-        document.body.style.background = "linear-gradient(to right, #4facfe, #00f2fe)";
+        container.style.background = "linear-gradient(to right, #4facfe, #00f2fe)";
     }
 }
