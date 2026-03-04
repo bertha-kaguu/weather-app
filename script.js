@@ -64,6 +64,9 @@ function getWeatherByCoords(lat, lon) {
 
 function displayWeather(data) {
     const icon = data.weather[0].icon;
+    const weatherType = data.weather[0].main;
+
+    changeBackground(weatherType);
 
     weatherResult.innerHTML = `
         <h2>${data.name}</h2>
@@ -115,6 +118,7 @@ function showRecent() {
 showRecent();
 
 function changeBackground(weatherType) {
+    if (document.body.classList.contains("dark")) return;
     if (weatherType === "Clear") {
         document.body.style.background = "linear-gradient(to right, #56ccf2, #2f80ed)";
     } 
