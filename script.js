@@ -21,19 +21,28 @@ function getWeather(city) {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            if (data.cod === "404") {
-                weatherResult.innerHTML = "<p>City not found</p>";
+            console.log(data); // 🔍 See what API returns
+
+            // If API returns error
+            if (data.cod !== 200) {
+                weatherResult.innerHTML = `<p>Error: ${data.message}</p>`;
                 return;
             }
 
+            // Safe access
+            const temperature = data.main?.temp;
+            const description = data.weather?.[0]?.description;
+            const humidity = data.main?.humidity;
+
             weatherResult.innerHTML = `
                 <h2>${data.name}</h2>
-                <p>Temperature: ${data.main.temp}°C</p>
-                <p>Weather: ${data.weather[0].description}</p>
-                <p>Humidity: ${data.main.humidity}%</p>
+                <p>Temperature: ${temperature}°C</p>
+                <p>Weather: ${description}</p>
+                <p>Humidity: ${humidity}%</p>
             `;
         })
         .catch(error => {
             console.error("Error:", error);
+            weatherResult.innerHTML = "<p>Something went wrong.</p>";
         });
 }
