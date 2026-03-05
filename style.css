@@ -102,12 +102,16 @@ button:hover {
 .forecast {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap; 
     gap: 10px;
     margin-top: 15px;
+    overflow-x: auto;       
+    padding-bottom: 5px;
 }
 
 .forecast-card {
-    flex: 1;
+    flex: 1 1 60px;
+    max-width: 60px;
     background: rgba(255,255,255,0.25);
     backdrop-filter: blur(6px);
 
