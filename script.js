@@ -8,6 +8,10 @@ const locationBtn = document.getElementById("locationBtn");
 const darkToggle = document.getElementById("darkToggle");
 const recentDiv = document.getElementById("recentSearches");
 const container = document.querySelector(".container");
+const dateElement = document.getElementById("date");
+
+const today = new Date();
+dateElement.textContent = today.toDateString();
 
 searchBtn.addEventListener("click", () => searchWeather());
 cityInput.addEventListener("keypress", e => {
@@ -53,7 +57,7 @@ function searchWeather() {
 }
 
 function getWeather(city) {
-    weatherResult.innerHTML = "Loading...";
+    weatherResult.innerHTML = `<div class="loader"></div>`;
     forecastDiv.innerHTML = "";
 
     fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
@@ -86,10 +90,16 @@ function displayWeather(data) {
 
     weatherResult.innerHTML = `
         <h2>${data.name}</h2>
+
         <img src="https://openweathermap.org/img/wn/${icon}@2x.png">
+
         <h3>${data.main.temp}°C</h3>
+
         <p>${data.weather[0].description}</p>
+
         <p>Humidity: ${data.main.humidity}%</p>
+        <p>Wind: ${data.wind.speed} m/s</p>
+        <p>Feels like: ${data.main.feels_like}°C</p>
     `;
 }
 
