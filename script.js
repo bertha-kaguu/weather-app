@@ -121,12 +121,14 @@ function getForecast(city) {
                 const icon = day.weather[0].icon;
 
                 forecastDiv.innerHTML += `
-                    <div class="forecast-card" style="animation-delay:${index * 0.2}s">
-                    <p>${new Date(day.dt_txt).toLocaleDateString()}</p>
-                    <img src="https://openweathermap.org/img/wn/${icon}.png">
-                    <p>${day.main.temp}°C</p>
-                    </div>
-                `;
+                <div class="forecast-card" style="animation-delay:${index * 0.2}s">
+                <p class="day">
+                ${new Date(day.dt_txt).toLocaleDateString("en-US", { weekday: "short" })}
+                </p>
+                <img src="https://openweathermap.org/img/wn/${day.weather[0].icon}.png">
+                <p class="temp">${Math.round(day.main.temp)}°C</p>
+                </div>
+               `;
             });
         });
 }
