@@ -97,15 +97,24 @@ function getForecast(city) {
     fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`)
         .then(res => res.json())
         .then(data => {
+
             const daily = data.list.filter(item => item.dt_txt.includes("12:00:00"));
 
             forecastDiv.innerHTML = "";
 
             daily.slice(0, 5).forEach(day => {
+
+                const date = new Date(day.dt_txt);
+                const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
+
+                const temp = Math.round(day.main.temp);
+                const icon = day.weather[0].icon;
+
                 forecastDiv.innerHTML += `
                     <div class="forecast-card">
-                        <p>${new Date(day.dt_txt).toLocaleDateString()}</p>
-                        <p>${day.main.temp}°C</p>
+                        <p>${dayName}</p>
+                        <img src="https://openweathermap.org/img/wn/${icon}.png">
+                        <p>${temp}°C</p>
                     </div>
                 `;
             });
