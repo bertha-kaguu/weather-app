@@ -112,7 +112,7 @@ function getForecast(city) {
 
             forecastDiv.innerHTML = "";
 
-            daily.slice(0, 5).forEach(day => {
+            daily.slice(0, 5).forEach((day, index) => {
 
                 const date = new Date(day.dt_txt);
                 const dayName = date.toLocaleDateString("en-US", { weekday: "short" });
@@ -121,10 +121,10 @@ function getForecast(city) {
                 const icon = day.weather[0].icon;
 
                 forecastDiv.innerHTML += `
-                    <div class="forecast-card">
-                        <p>${dayName}</p>
-                        <img src="https://openweathermap.org/img/wn/${icon}.png">
-                        <p>${temp}°C</p>
+                    <div class="forecast-card" style="animation-delay:${index * 0.2}s">
+                    <p>${new Date(day.dt_txt).toLocaleDateString()}</p>
+                    <img src="https://openweathermap.org/img/wn/${icon}.png">
+                    <p>${day.main.temp}°C</p>
                     </div>
                 `;
             });
