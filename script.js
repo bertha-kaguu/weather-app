@@ -17,31 +17,10 @@ cityInput.addEventListener("keypress", e => {
 });
 
 locationBtn.addEventListener("click", () => {
-
-    if (!navigator.geolocation) {
-        alert("Geolocation is not supported by your browser");
-        return;
-    }
-
-    weatherResult.innerHTML = "Getting your location...";
-
-    navigator.geolocation.getCurrentPosition(
-        position => {
-            const { latitude, longitude } = position.coords;
-            console.log("Lat:", latitude, "Lon:", longitude); // DEBUG
-
-            getWeatherByCoords(latitude, longitude);
-        },
-        error => {
-            console.error(error);
-
-            if (error.code === 1) {
-                weatherResult.innerHTML = "Permission denied. Please allow location access.";
-            } else {
-                weatherResult.innerHTML = "Unable to get your location.";
-            }
-        }
-    );
+    navigator.geolocation.getCurrentPosition(position => {
+        const { latitude, longitude } = position.coords;
+        getWeatherByCoords(latitude, longitude);
+    });
 });
 
 darkToggle.addEventListener("click", () => {
@@ -93,21 +72,16 @@ function getWeather(city) {
 }
 
 function getWeatherByCoords(lat, lon) {
-    fetch(`http://localhost:3000/weather-by-coords?lat=${lat}&lon=${lon}`)
+    fetch(`http://localhost:3000/weather?lat=${lat}&lon=${lon}`)
         .then(res => res.json())
         .then(data => {
             if (data.error) {
-                console.log("Location weather:", data);
                 weatherResult.innerHTML = data.error;
                 return;
             }
 
             displayWeather(data);
             getForecast(data.name); // use city name for forecast
-        });
-        .catch(err => {
-            console.error(err);
-            weatherResult.innerHTML = "Error fetching location weather";
         });
 }
 
