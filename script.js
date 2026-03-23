@@ -1,5 +1,3 @@
-const apiKey = "65646105ab2d0cdac212a8608d066b91";
-
 const searchBtn = document.getElementById("searchBtn");
 const cityInput = document.getElementById("cityInput");
 const weatherResult = document.getElementById("weatherResult");
@@ -60,7 +58,7 @@ function getWeather(city) {
     weatherResult.innerHTML = `<div class="loader"></div>`;
     forecastDiv.innerHTML = "";
 
-    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`)
+    fetch(`http://localhost:3000/weather?city=${city}`)
         .then(res => res.json())
         .then(data => {
             if (data.cod !== 200) {
@@ -74,7 +72,7 @@ function getWeather(city) {
 }
 
 function getWeatherByCoords(lat, lon) {
-    fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`)
+    fetch(`http://localhost:3000/weather-by-coords?lat=${lat}&lon=${lon}`)
         .then(res => res.json())
         .then(data => {
             displayWeather(data);
@@ -104,7 +102,7 @@ function displayWeather(data) {
 }
 
 function getForecast(city) {
-    fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric&appid=${apiKey}`)
+    fetch(`http://localhost:3000/forecast?city=${city}`)
         .then(res => res.json())
         .then(data => {
 
