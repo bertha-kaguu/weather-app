@@ -17,10 +17,15 @@ cityInput.addEventListener("keypress", e => {
 });
 
 locationBtn.addEventListener("click", () => {
-    navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        getWeatherByCoords(latitude, longitude);
-    });
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const { latitude, longitude } = position.coords;
+            getWeatherByCoords(latitude, longitude);
+        },
+        error => {
+            weatherResult.innerHTML = "Location access denied ❌";
+        }
+    );
 });
 
 darkToggle.addEventListener("click", () => {
@@ -72,23 +77,13 @@ function getWeather(city) {
 }
 
 function getWeatherByCoords(lat, lon) {
+    weatherResult.innerHTML = `<div class="loader"></div>`;
+    forecastDiv.innerHTML = "";
+
     fetch(`http://localhost:3000/weather?lat=${lat}&lon=${lon}`)
         .then(res => res.json())
         .then(data => {
-            if (data.error) {
-                weatherResult.innerHTML = data.error;
-                return;
-            }
 
-            displayWeather(data);
-            getForecast(data.name);
-        });
-}
-
-function getWeatherByCoords(lat, lon) {
-    fetch(`http://localhost:3000/weather?lat=${lat}&lon=${lon}`)
-        .then(res => res.json())
-        .then(data => {
             if (data.error) {
                 weatherResult.innerHTML = data.error;
                 return;
@@ -96,8 +91,12 @@ function getWeatherByCoords(lat, lon) {
 
             displayWeather(data);
 
-            // IMPORTANT: use city from response (more reliable)
+            // use returned city name
             getForecast(data.name);
+        })
+        .catch(err => {
+            weatherResult.innerHTML = "Failed to fetch location weather";
+            console.error(err);
         });
 }
 
