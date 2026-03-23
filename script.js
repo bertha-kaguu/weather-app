@@ -75,8 +75,13 @@ function getWeatherByCoords(lat, lon) {
     fetch(`http://localhost:3000/weather-by-coords?lat=${lat}&lon=${lon}`)
         .then(res => res.json())
         .then(data => {
+            if (data.error) {
+                weatherResult.innerHTML = data.error;
+                return;
+            }
+
             displayWeather(data);
-            getForecast(data.name);
+            getForecast(data.name); // use city name for forecast
         });
 }
 
@@ -145,9 +150,15 @@ function saveRecent(city) {
 
 function showRecent() {
     const cities = JSON.parse(localStorage.getItem("recentCities")) || [];
+
     recentDiv.innerHTML = cities.map(city =>
-        `<button onclick="getWeather('${city}')">${city}</button>`
+        `<button onclick="searchFromRecent('${city}')">${city}</button>`
     ).join("");
+}
+
+function searchFromRecent(city) {
+    cityInput.value = city;
+    getWeather(city);
 }
 
 showRecent();
