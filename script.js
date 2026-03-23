@@ -97,12 +97,17 @@ function getWeatherByCoords(lat, lon) {
         .then(res => res.json())
         .then(data => {
             if (data.error) {
+                console.log("Location weather:", data);
                 weatherResult.innerHTML = data.error;
                 return;
             }
 
             displayWeather(data);
             getForecast(data.name); // use city name for forecast
+        });
+        .catch(err => {
+            console.error(err);
+            weatherResult.innerHTML = "Error fetching location weather";
         });
 }
 
