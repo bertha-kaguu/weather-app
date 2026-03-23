@@ -17,10 +17,31 @@ cityInput.addEventListener("keypress", e => {
 });
 
 locationBtn.addEventListener("click", () => {
-    navigator.geolocation.getCurrentPosition(position => {
-        const { latitude, longitude } = position.coords;
-        getWeatherByCoords(latitude, longitude);
-    });
+
+    if (!navigator.geolocation) {
+        alert("Geolocation is not supported by your browser");
+        return;
+    }
+
+    weatherResult.innerHTML = "Getting your location...";
+
+    navigator.geolocation.getCurrentPosition(
+        position => {
+            const { latitude, longitude } = position.coords;
+            console.log("Lat:", latitude, "Lon:", longitude); // DEBUG
+
+            getWeatherByCoords(latitude, longitude);
+        },
+        error => {
+            console.error(error);
+
+            if (error.code === 1) {
+                weatherResult.innerHTML = "Permission denied. Please allow location access.";
+            } else {
+                weatherResult.innerHTML = "Unable to get your location.";
+            }
+        }
+    );
 });
 
 darkToggle.addEventListener("click", () => {
