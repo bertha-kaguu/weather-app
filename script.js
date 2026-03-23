@@ -81,7 +81,23 @@ function getWeatherByCoords(lat, lon) {
             }
 
             displayWeather(data);
-            getForecast(data.name); // use city name for forecast
+            getForecast(data.name);
+        });
+}
+
+function getWeatherByCoords(lat, lon) {
+    fetch(`http://localhost:3000/weather?lat=${lat}&lon=${lon}`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                weatherResult.innerHTML = data.error;
+                return;
+            }
+
+            displayWeather(data);
+
+            // IMPORTANT: use city from response (more reliable)
+            getForecast(data.name);
         });
 }
 
